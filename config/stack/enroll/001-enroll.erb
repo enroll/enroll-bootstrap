@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+
+  SetEnv RAILS_ENV production
+  ServerName <%= host_name %>:80
+  DocumentRoot <%= public_path %>
+
+  <Directory <%= public_path %>>
+      Options -MultiViews
+      Allow from all
+      AllowOverride none
+  </Directory>
+
+</VirtualHost>

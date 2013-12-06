@@ -19,12 +19,10 @@ end
 
 package :passenger, :provides => :appserver do
   description 'Phusion Passenger (mod_rails)'
-  version '2.2.4'
+  version '4.0.26'
   binaries = %w(passenger-config passenger-install-nginx-module passenger-install-apache2-module passenger-make-enterprisey passenger-memory-stats passenger-spawn-server passenger-status passenger-stress-test)
   
   gem 'passenger', :version => version do
-    binaries.each {|bin| post :install, "ln -s #{REE_PATH}/bin/#{bin} /usr/local/bin/#{bin}"}
-    
     post :install, 'echo -en "\n\n\n\n" | sudo passenger-install-apache2-module'
 
     # Create the passenger conf file
@@ -32,8 +30,8 @@ package :passenger, :provides => :appserver do
     post :install, 'touch /etc/apache2/extras/passenger.conf'
     post :install, 'echo "Include /etc/apache2/extras/passenger.conf"|sudo tee -a /etc/apache2/apache2.conf'
 
-    [%Q(LoadModule passenger_module /usr/local/ruby-enterprise/lib/ruby/gems/1.8/gems/passenger-#{version}/ext/apache2/mod_passenger.so),
-    %Q(PassengerRoot /usr/local/ruby-enterprise/lib/ruby/gems/1.8/gems/passenger-#{version}),
+    [%Q(LoadModule passenger_module /usr/local/lib/ruby/gems/2.0.0/gems/passenger-#{version}/buildout/apache2/mod_passenger.so),
+    %Q(PassengerRoot /usr/local/lib/ruby/gems/2.0.0/gems/passenger-#{version}),
     %q(PassengerRuby /usr/local/bin/ruby),
     %q(RailsEnv production)].each do |line|
       post :install, "echo '#{line}' |sudo tee -a /etc/apache2/extras/passenger.conf"
@@ -45,11 +43,11 @@ package :passenger, :provides => :appserver do
 
   verify do
     has_file "/etc/apache2/extras/passenger.conf"
-    has_file "#{REE_PATH}/ext/apache2/mod_passenger.so"
-    binaries.each {|bin| has_symlink "/usr/local/bin/#{bin}", "#{REE_PATH}/bin/#{bin}" }
+    # has_file "#{REE_PATH}/ext/apache2/mod_passenger.so"
+    # binaries.each {|bin| has_symlink "/usr/local/bin/#{bin}", "#{REE_PATH}/bin/#{bin}" }
   end
 
-  requires :apache, :apache2_prefork_dev, :ruby_enterprise
+  requires :apache, :apache2_prefork_dev, :ruby
 end
 
 # These "installers" are strictly optional, I believe

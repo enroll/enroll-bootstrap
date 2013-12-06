@@ -1,7 +1,7 @@
 $:<< File.join(File.dirname(__FILE__), 'stack')
 
 # Require the stack base
-%w(essential scm ruby_enterprise memcached postgresql mysql).each do |lib|
+%w(essential scm ruby_enterprise postgresql mysql).each do |lib|
   require lib
 end
 
@@ -24,7 +24,7 @@ require 'apache'
 policy :stack, :roles => :app do
   requires :webserver               # Apache or Nginx
   requires :appserver               # Passenger
-  requires :ruby_enterprise         # Ruby Enterprise edition
+  requires :ruby         # Ruby Enterprise edition
   requires :database                # MySQL or Postgres, also installs rubygems for each
   requires :scm                     # Git
   #requires :memcached               # Memcached

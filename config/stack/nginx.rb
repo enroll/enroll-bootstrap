@@ -35,7 +35,7 @@ package :passenger, :provides => :appserver do
     post :install, "sudo passenger-install-nginx-module --auto --auto-download --prefix=/usr/local/nginx"
   end
   
-  requires :ruby_enterprise
+  requires :ruby
   
   verify do
     has_gem "passenger", version

@@ -3,6 +3,7 @@ $:<< File.join(File.dirname(__FILE__), 'stack')
 require 'essential'
 require 'scm'
 require 'ruby'
+require 'nodejs'
 require 'postgresql'
 require 'enroll'
 require 'apache'
@@ -10,8 +11,9 @@ require 'apache'
 policy :stack, :roles => :app do
   requires :webserver               # Apache or Nginx
   requires :appserver               # Passenger
-  requires :ruby         # Ruby Enterprise edition
+  requires :ruby
   requires :ruby_gems
+  requires :nodejs
   requires :database                # MySQL or Postgres, also installs rubygems for each
   requires :scm                     # Git
 

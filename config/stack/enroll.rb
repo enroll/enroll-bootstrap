@@ -3,7 +3,7 @@ package :enroll do
 
   user_name = 'enroll'
   app_name = 'enroll'
-  host_name = 'test1.enroll.io'
+  host_name = 'staging.enroll.io'
   app_path = "/var/apps/#{app_name}"
   current_path = "#{app_path}/current"
   shared_path = "#{app_path}/shared"

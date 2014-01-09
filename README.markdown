@@ -3,8 +3,8 @@
 1. SSH to server, create user `enroll`, setup keys, add to sudoers with NOPASSWD option.
 2. Fix locales:
 
-    sudo locale-gen en_US.UTF-8
-    sudo dpkg-reconfigure locales
+        sudo locale-gen en_US.UTF-8
+        sudo dpkg-reconfigure locales
 
 3. Disable root login, disable password authentication
 4. `cp config/deploy.example.rb config/deploy.rb`

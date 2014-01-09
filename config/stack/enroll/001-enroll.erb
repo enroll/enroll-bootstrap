@@ -1,6 +1,6 @@
 <VirtualHost *:80>
 
-  SetEnv RAILS_ENV production
+  SetEnv RAILS_ENV <%= environment %>
   ServerName <%= host_name %>:80
   DocumentRoot <%= public_path %>
 

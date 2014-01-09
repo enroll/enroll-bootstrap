@@ -1,8 +1,14 @@
+def mkdir_and_chown(path, user)
+  runner "mkdir -p #{path}"
+  runner "chown #{user} #{path}"
+end
+
 package :enroll do
   # Apache virtual host
 
   user_name = 'enroll'
   app_name = 'enroll'
+  environment = 'staging'
   host_name = 'staging.enroll.io'
   app_path = "/var/apps/#{app_name}"
   current_path = "#{app_path}/current"
@@ -12,13 +18,15 @@ package :enroll do
     :user_name => user_name,
     :host_name => host_name,
     :app_name => app_name,
-    :public_path => public_path
+    :public_path => public_path,
+    :environment => environment
   }
 
   # Apache config
   requires :apache
   remote_file = "/etc/apache2/sites-enabled/001-#{app_name}"
   local_template = File.join(File.dirname(__FILE__), app_name, "001-#{app_name}.erb")
+  puts "Creating Apache config: #{remote_file}"
   file remote_file,
     :contents => render(local_template, locals),
     :sudo => true do
@@ -26,15 +34,18 @@ package :enroll do
   end
 
   # Directory structure
-  runner "mkdir -p #{app_path}"
-  runner "chown #{user_name} #{app_path}"
+  mkdir_and_chown(app_path, user_name)
+  mkdir_and_chown(shared_path, user_name)
+  mkdir_and_chown("#{shared_path}/config", user_name)
+  mkdir_and_chown(current_path, user_name)
 
   # Create database user
-  requires :enroll_db, user_name: user_name, db_name: "#{app_name}_production"
+  requires :enroll_db, user_name: user_name, db_name: "#{app_name}_#{environment}"
 
   # Database config
   db_remote = "#{shared_path}/config/database.yml"
   db_template = File.join(File.dirname(__FILE__), app_name, "database.yml.erb")
+  puts "Creating database config: #{db_remote}"
   file db_remote,
     :contents => render(db_template, locals)
 

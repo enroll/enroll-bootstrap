@@ -1,7 +1,7 @@
-production:
+<%= environment %>:
   adapter: postgresql
   encoding: unicode
-  database: <%= app_name %>_production
+  database: <%= app_name %>_<%= environment %>
   pool: 5
   username: <%= user_name %>
   password:

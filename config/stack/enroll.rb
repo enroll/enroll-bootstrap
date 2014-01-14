@@ -22,7 +22,10 @@ package :enroll do
     :environment => environment
   }
 
-  # Apache config
+  # Remove the default Apache config
+  runner "rm -f /etc/apache2/sites-enabled/000-default"
+
+  # Install Apache config for Enroll
   requires :apache
   remote_file = "/etc/apache2/sites-enabled/001-#{app_name}"
   local_template = File.join(File.dirname(__FILE__), app_name, "001-#{app_name}.erb")

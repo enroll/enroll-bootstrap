@@ -1,5 +1,11 @@
 $:<< File.join(File.dirname(__FILE__), 'stack')
 
+['ENROLL_ENV', 'ENROLL_HOST'].each do |e|
+  if !ENV[e] || ENV[e] == ''
+    raise "Missing argument: #{e}"
+  end
+end
+
 require 'essential'
 require 'scm'
 require 'ruby'

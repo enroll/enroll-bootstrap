@@ -8,8 +8,8 @@ package :enroll do
 
   user_name = 'enroll'
   app_name = 'enroll'
-  environment = 'staging'
-  host_name = 'staging.enroll.io'
+  environment = ENV['ENROLL_ENV']
+  host_name = ENV['ENROLL_HOST']
   app_path = "/var/apps/#{app_name}"
   current_path = "#{app_path}/current"
   shared_path = "#{app_path}/shared"

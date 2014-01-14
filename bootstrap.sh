@@ -1,0 +1,1 @@
+ENROLL_ENV=$1 ENROLL_HOST=$2 sprinkle -c -s config/install.rb

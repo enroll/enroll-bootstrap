@@ -11,3 +11,23 @@
   </Directory>
 
 </VirtualHost>
+
+<VirtualHost *:443>
+	SetEnv RAILS_ENV <%= environment %>
+	ServerName <%= host_name %>:80
+	DocumentRoot <%= public_path %>
+
+	<Directory <%= public_path %>>
+		Options -MultiViews
+		Allow from all
+		AllowOverride none
+	</Directory>
+ 
+	SSLEngine on
+	SSLProtocol all
+	SSLCertificateFile /home/<%= user_name %>/public.crt
+	SSLCertificateKeyFile /home/<%= user_name %>/private.key
+	SSLCACertificateFile /home/<%= user_name %>/intermediate.crt
+</VirtualHost>
+
+SSLPassPhraseDialog exec:/home/<%= user_name %>/password

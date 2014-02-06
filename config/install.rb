@@ -14,6 +14,7 @@ require 'postgresql'
 require 'enroll'
 require 'apache'
 require 'redis'
+require 'imagemagick'
 
 policy :stack, :roles => :app do
   requires :webserver               # Apache or Nginx
@@ -24,6 +25,7 @@ policy :stack, :roles => :app do
   requires :database                # MySQL or Postgres, also installs rubygems for each
   requires :scm                     # Git
   requires :redis
+  requires :imagemagick
 
   requires :enroll
 end

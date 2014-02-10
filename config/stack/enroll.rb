@@ -17,6 +17,7 @@ package :enroll do
   locals = {
     :user_name => user_name,
     :host_name => host_name,
+    :host_name_escaped => host_name.gsub('.', '\.'),
     :app_name => app_name,
     :public_path => public_path,
     :environment => environment

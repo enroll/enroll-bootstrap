@@ -1,8 +1,11 @@
 <VirtualHost *:80>
-
   SetEnv RAILS_ENV <%= environment %>
   ServerName <%= host_name %>:80
   DocumentRoot <%= public_path %>
+
+  RewriteEngine on
+  RewriteCond %{HTTP_HOST} ^www\.<%= host_name_escaped %>
+  RewriteRule ^(.*)$ http://<%= host_name_escaped %>$1 [R=permanent,L]
 
   <Directory <%= public_path %>>
       Options -MultiViews
@@ -16,6 +19,10 @@
 	SetEnv RAILS_ENV <%= environment %>
 	ServerName <%= host_name %>:80
 	DocumentRoot <%= public_path %>
+
+  RewriteEngine on
+  RewriteCond %{HTTP_HOST} ^www\.<%= host_name_escaped %>
+  RewriteRule ^(.*)$ http://<%= host_name_escaped %>$1 [R=permanent,L]
 
 	<Directory <%= public_path %>>
 		Options -MultiViews
